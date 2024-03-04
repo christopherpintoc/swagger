@@ -1,0 +1,191 @@
+openapi: 3.0.1
+info:
+  title: Swagger Sodexo - OpenAPI 3.0 definition
+  version: 1.0.11
+servers:
+  url: http://localhost:8080
+  description: Generated server url of springboot sodexo services
+paths:
+  /apiNoticias/updateFavoritos/{idFavorite}:
+    put:
+      tags:
+      - noticias-controller-rest
+      summary: Update an existing favorite in local database H2
+      description: Update an existing favorite by idFavorite
+      operationId: actualizarFavoritos
+      parameters:
+      - name: idFavorite
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Update an existent favorite 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Noticias'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/NoticiasResponseRest'
+        "400":
+          description: Bad Request
+        "404":
+          description: Favorito no entontrado
+        "500":
+          description: Error al actualizar favorito
+  /apiNoticias/setFavorito:
+    post:
+      tags:
+      - noticias-controller-rest
+      summary: Create a new favorite in local database H2
+      description: Create a new favorite 
+      operationId: guardarFavorito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Noticias'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/NoticiasResponseRest'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not found
+        "500":
+          description: Error al guardar
+  /apiNoticias/getFavoritos:
+    get:
+      tags:
+      - noticias-controller-rest
+      summary: Get a list of all favorites stored in local database H2
+      description: Get a list of all favorites
+      operationId: obtenerFavoritos
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/NoticiasResponseRest'
+        "400":
+          description: Bad Request
+        "404":
+          description: Favoritos no entontrados
+        "500":
+          description: Error en consultar favoritos
+  /apiNoticias/getFavoritosPorTitulo/{title}:
+    get:
+      tags:
+      - noticias-controller-rest
+      summary: Get a specific favorite by title stored in local database H2
+      description: Get a specific favorite by title 
+      operationId: buscarFavoritosPorTitulo
+      parameters:
+      - name: title
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/NoticiasResponseRest'
+        "404":
+          description: Favorito no entontrado
+        "500":
+          description: Error al consultar favoritos
+  /apiNoticias/deleteFavoritos/{idFavorite}:
+    delete:
+      tags:
+      - noticias-controller-rest
+      summary: Deletes a favorite by idFavorite
+      description: delete a favorite
+      operationId: borrarFavoritos
+      parameters:
+      - name: idFavorite
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/NoticiasResponseRest'
+        "400":
+          description: Bad Request
+        "404":
+          description: Favorito no entontrado
+        "500":
+          description: Error al borrar favorito
+components:
+  schemas:
+    Noticias:
+      type: object
+      properties:
+        idFavorite:
+          type: integer
+          format: int64
+          example: 1
+        id:
+          type: string
+          example: 21031
+        title:
+          type: string
+          example: SpaceNews Announces Promotion of Kamal Flucker to Global Sales Director
+        url:
+          type: string
+          example: https://spacenews.com/spacenews-announces-promotion-of-kamal-flucker-to-global-sales-director/
+        image_url:
+          type: string
+          example: https://spacenews.com/wp-content/uploads/2023/01/kamal_f-300x300.jpg
+        news_site:
+          type: string
+          example: SpaceNews
+        summary:
+          type: string
+          example: Tysons Corner, VA – October 2, 2023 –  SpaceNews, the most trusted and comprehensive source of news and analysis of the global space industry, is proud to announce the promotion […]
+        published_at:
+          type: string
+          example: 2023-10-02T20:03:44Z
+        updated_at:
+          type: string
+          example: 2023-10-02T20:07:49.906000Z
+        featured:
+          type: boolean
+          example: false
+    NoticiasResponse:
+      type: object
+      properties:
+        noticias:
+          type: object
+    NoticiasResponseRest:
+      type: object
+      properties:
+        metadata:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        noticiasResponse:
+          $ref: '#/components/schemas/NoticiasResponse'
