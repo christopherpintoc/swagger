@@ -4,7 +4,7 @@ info:
   version: 1.0.11
 servers:
   url: http://localhost:8080
-  description: Generated server url of springboot sodexo services
+  description: Generated server url of springboot noticias services
 paths:
   /apiNoticias/updateFavoritos/{idFavorite}:
     put:
