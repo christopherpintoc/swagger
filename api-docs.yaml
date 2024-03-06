@@ -2,9 +2,6 @@ openapi: 3.0.1
 info:
   title: Swagger Sodexo - OpenAPI 3.0 definition
   version: 1.0.11
-servers:
-  url: http://localhost:8080
-  description: Generated server url of springboot noticias services
 paths:
   /apiNoticias/updateFavoritos/{idFavorite}:
     put:
